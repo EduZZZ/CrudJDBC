@@ -1,4 +1,4 @@
-package com.mycompany.loja_informatica;
+package br.com.loja_informatica;
 
 public class Computador {
 
