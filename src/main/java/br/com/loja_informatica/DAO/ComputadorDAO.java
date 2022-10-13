@@ -64,8 +64,8 @@ public class ComputadorDAO {
                 Computador computador = new Computador();
 
                 computador.setId(rset.getInt("id"));
-                computador.setHd("HD");
-                computador.setProcessador("Processador");
+                computador.setHd(rset.getString("HD"));
+                computador.setProcessador(rset.getString("Processador"));
 
                 computadors.add(computador);
 

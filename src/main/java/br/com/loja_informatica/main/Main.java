@@ -12,8 +12,8 @@ public class Main {
         ComputadorDAO computadorDAO = new ComputadorDAO();
         
         computador.setHd("1TB");
-        computador.setProcessador("i5 - 9100F");
-        //computadorDAO.save(computador);
+        computador.setProcessador("i7 - 9100F");
+        computadorDAO.save(computador);
         
         //UPDATE
         Computador c1 = new Computador();
@@ -24,7 +24,7 @@ public class Main {
         //computadorDAO.update(c1);
         
         //REMOVE
-        computadorDAO.deleteById(10);
+        //computadorDAO.deleteById(10);
         
         
         
@@ -32,7 +32,7 @@ public class Main {
         //READ
   
         for(Computador c : computadorDAO.getComputador()){
-            System.out.println("Computador: "+c.getProcessador());
+            System.out.println("Computador: "+c.getId()+" "+c.getProcessador()+" "+c.getHd());
         
         }
         
