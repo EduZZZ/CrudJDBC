@@ -11,8 +11,8 @@ public class Conexao {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/loja_informatica";
 
     public static Connection connectionToMySQL() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        Connection connection = DriverManager.getConnection(USERNAME, USERNAME, PASSWORD);
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection(DATABASE_URL, USERNAME, PASSWORD);
 
         return connection;
     }

@@ -14,6 +14,7 @@ public class Main {
         computador.setProcessador("i5 - 9100F");
         
         computadorDAO.save(computador);
+        System.out.println("");
         
        
         
