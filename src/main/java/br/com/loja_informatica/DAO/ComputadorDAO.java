@@ -2,13 +2,16 @@ package br.com.loja_informatica.DAO;
 
 import br.com.loja_informatica.Computador;
 import br.com.loja_informatica.factory.Conexao;
+import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class ComputadorDAO {
 
     public void save(Computador computador) {
-        String sql = "";
+        String sql = "Insert into Computador (hd, processador) VALUES (?, ?)";
         Connection conn = null;
         PreparedStatement pstm = null;
 
@@ -35,6 +38,54 @@ public class ComputadorDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<Computador> getComputador() {
+
+        String sql = "SELECT * FROM computador";
+
+        List<Computador> computadors = new ArrayList<Computador>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = Conexao.connectionToMySQL();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Computador computador = new Computador();
+
+                computador.setHd("HD");
+                computador.setProcessador("Processador");
+
+                computadors.add(computador);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rset != null) {
+                    rset.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return computadors;
     }
 
 }
