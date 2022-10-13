@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class ComputadorDAO {
 
+    //create
     public void save(Computador computador) {
         String sql = "Insert into Computador (hd, processador) VALUES (?, ?)";
         Connection conn = null;
@@ -40,6 +41,7 @@ public class ComputadorDAO {
         }
     }
 
+    //read
     public List<Computador> getComputador() {
 
         String sql = "SELECT * FROM computador";
@@ -60,7 +62,8 @@ public class ComputadorDAO {
 
             while (rset.next()) {
                 Computador computador = new Computador();
-
+                
+                computador.setId(rset.getInt("id"));
                 computador.setHd("HD");
                 computador.setProcessador("Processador");
 
@@ -88,4 +91,39 @@ public class ComputadorDAO {
         return computadors;
     }
 
+    //update
+    public void update(Computador computador) {
+
+        String sql = "UPDATE computador SET processador = ?,  HD = ? WHERE id = ?";
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = Conexao.connectionToMySQL();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setString(1, computador.getHd());
+            pstm.setString(2, computador.getProcessador());
+            pstm.setInt(3, computador.getId());
+
+            pstm.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+                if (pstm != null) {
+                    pstm.close();
+
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            }catch(Exception e){
+            e.printStackTrace();
+            }
+        }
+    }
 }

@@ -2,6 +2,7 @@ package br.com.loja_informatica;
 
 public class Computador {
 
+    private int id;
     private String hd;
     private String processador;
     private static String marca = "EduardoFeitosa";
@@ -33,4 +34,11 @@ public class Computador {
         Computador.marca = marca;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

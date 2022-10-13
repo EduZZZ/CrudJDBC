@@ -7,14 +7,25 @@ import br.com.loja_informatica.DAO.ComputadorDAO;
 public class Main {
     public static void main (String [] args){
         
+        //save
         Computador computador = new Computador();
         ComputadorDAO computadorDAO = new ComputadorDAO();
         
         computador.setHd("1TB");
         computador.setProcessador("i5 - 9100F");
+     computadorDAO.save(computador);
         
-        computadorDAO.save(computador);
+        //UPDATE
+        Computador c1 = new Computador();
+        c1.setProcessador("i3 - 2111i");
+        c1.setHd("500gb");
+        c1.setId(10);
         
+        computadorDAO.update(c1);
+        
+        
+        //read
+  
         for(Computador c : computadorDAO.getComputador()){
             System.out.println("Computador: "+c.getProcessador());
         
