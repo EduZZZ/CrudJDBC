@@ -62,7 +62,7 @@ public class ComputadorDAO {
 
             while (rset.next()) {
                 Computador computador = new Computador();
-                
+
                 computador.setId(rset.getInt("id"));
                 computador.setHd("HD");
                 computador.setProcessador("Processador");
@@ -121,9 +121,42 @@ public class ComputadorDAO {
                 if (conn != null) {
                     conn.close();
                 }
-            }catch(Exception e){
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
+    }
+
+    public void deleteById(int id) {
+
+        String sql = "Delete from computador where id = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = Conexao.connectionToMySQL();
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setInt(1, id);
+            pstm.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 }
