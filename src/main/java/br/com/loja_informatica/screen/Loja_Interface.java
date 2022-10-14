@@ -37,13 +37,14 @@ public class Loja_Interface extends javax.swing.JFrame {
         jPanel1Principal = new javax.swing.JPanel();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jInternalFrameVisualizarPC = new javax.swing.JInternalFrame();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldFiltro = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButtonVisualizarVoltar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButtonVisualizarDeletar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jButton2Filtro = new javax.swing.JButton();
         jInternalFrameCadastrarPC = new javax.swing.JInternalFrame();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -69,13 +70,13 @@ public class Loja_Interface extends javax.swing.JFrame {
         jInternalFrameVisualizarPC.setVisible(true);
         jInternalFrameVisualizarPC.getContentPane().setLayout(null);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldFiltro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                jTextFieldFiltroActionPerformed(evt);
             }
         });
-        jInternalFrameVisualizarPC.getContentPane().add(jTextField1);
-        jTextField1.setBounds(140, 30, 150, 22);
+        jInternalFrameVisualizarPC.getContentPane().add(jTextFieldFiltro);
+        jTextFieldFiltro.setBounds(140, 30, 140, 22);
 
         jLabel3.setText("Filtrar por processador:");
         jInternalFrameVisualizarPC.getContentPane().add(jLabel3);
@@ -110,10 +111,33 @@ public class Loja_Interface extends javax.swing.JFrame {
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
+        jTextArea1.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                jTextArea1HierarchyChanged(evt);
+            }
+        });
+        jTextArea1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTextArea1AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane1.setViewportView(jTextArea1);
 
         jInternalFrameVisualizarPC.getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(16, 70, 270, 180);
+        jScrollPane1.setBounds(16, 70, 290, 180);
+
+        jButton2Filtro.setText("Filtrar");
+        jButton2Filtro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2FiltroActionPerformed(evt);
+            }
+        });
+        jInternalFrameVisualizarPC.getContentPane().add(jButton2Filtro);
+        jButton2Filtro.setBounds(290, 30, 63, 25);
 
         jDesktopPane1.add(jInternalFrameVisualizarPC);
         jInternalFrameVisualizarPC.setBounds(0, 0, 680, 530);
@@ -239,9 +263,9 @@ public class Loja_Interface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1CadastrarProcessadorActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void jTextFieldFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFiltroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_jTextFieldFiltroActionPerformed
 
     private void jMenu1CadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1CadastrarActionPerformed
 
@@ -289,13 +313,13 @@ public class Loja_Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1CadastrarSalvarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         ComputadorDAO computadorDAO = new ComputadorDAO();
         Computador c1 = new Computador();
         int i = Integer.parseInt(JOptionPane.showInputDialog("Insira o número do PC que deseja atualizar:"));
         String processador = JOptionPane.showInputDialog("Insira o processador do novo PC");
         String hd = JOptionPane.showInputDialog("Insira o HD do novo PC");
-        
+
         c1.setProcessador(processador);
         c1.setHd(hd);
         c1.setId(i);
@@ -313,13 +337,35 @@ public class Loja_Interface extends javax.swing.JFrame {
         int i = Integer.parseInt(JOptionPane.showInputDialog(rootPane, "Insira o número do PC que deseja deletar"));
         computadorDAO.deleteById(i);
         JOptionPane.showMessageDialog(rootPane, "Deletado com sucesso!");
-        
+
         jTextArea1.setText("");
         for (Computador c : computadorDAO.getComputador()) {
             jTextArea1.setText(jTextArea1.getText() + "PC " + c.getId() + " -> " + c.getProcessador() + " " + c.getHd() + "\n");
         }
- 
+
     }//GEN-LAST:event_jButtonVisualizarDeletarActionPerformed
+
+    private void jButton2FiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2FiltroActionPerformed
+        Computador computador = new Computador();
+        ComputadorDAO computadorDAO = new ComputadorDAO();
+
+        String f = jTextFieldFiltro.getText();
+
+        jTextArea1.setText("");
+        for (Computador c : computadorDAO.getFill(f)) {
+            jTextArea1.setText(jTextArea1.getText() + "PC ->" + c.getProcessador() + " \n");
+
+        }
+
+    }//GEN-LAST:event_jButton2FiltroActionPerformed
+
+    private void jTextArea1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTextArea1AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea1AncestorAdded
+
+    private void jTextArea1HierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTextArea1HierarchyChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextArea1HierarchyChanged
 
     /**
      * @param args the command line arguments
@@ -360,6 +406,7 @@ public class Loja_Interface extends javax.swing.JFrame {
     private javax.swing.JMenuBar BarraPrincipal;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton1CadastrarSalvar;
+    private javax.swing.JButton jButton2Filtro;
     private javax.swing.JButton jButtonCadastrarCancelar;
     private javax.swing.JButton jButtonVisualizarDeletar;
     private javax.swing.JButton jButtonVisualizarVoltar;
@@ -378,8 +425,8 @@ public class Loja_Interface extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1Principal;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField1CadastrarProcessador;
     private javax.swing.JTextField jTextField2CadastrarHd;
+    private javax.swing.JTextField jTextFieldFiltro;
     // End of variables declaration//GEN-END:variables
 }

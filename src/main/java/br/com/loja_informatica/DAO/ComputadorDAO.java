@@ -159,4 +159,91 @@ public class ComputadorDAO {
         }
 
     }
+
+    public void filter(String filter) {
+
+        String sql = "SELECT processador from computador where processador like ?";
+        
+        String fil = "'%"+filter+"%'";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        try {
+            conn = Conexao.connectionToMySQL();
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            pstm.setString(1, fil);
+            pstm.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+    
+    public List<Computador> getFill(String f) {
+        String fil = "'%"+f+"%'";
+
+        String sql = "SELECT processador from computador where processador like "+fil;
+
+        List<Computador> computadors = new ArrayList<Computador>();
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+
+        ResultSet rset = null;
+
+        try {
+            conn = Conexao.connectionToMySQL();
+
+            pstm = (PreparedStatement) conn.prepareStatement(sql);
+
+            rset = pstm.executeQuery();
+
+            while (rset.next()) {
+                Computador computador = new Computador();
+
+             
+                
+                computador.setProcessador(rset.getString("Processador"));
+
+                computadors.add(computador);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rset != null) {
+                    rset.close();
+                }
+                if (pstm != null) {
+                    pstm.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return computadors;
+    }
+    
+    
 }
