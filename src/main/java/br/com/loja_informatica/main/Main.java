@@ -21,7 +21,7 @@ public class Main {
         c1.setHd("500gb");
         c1.setId(10);
         
-        //computadorDAO.update(c1);
+        computadorDAO.update(c1);
         
         //REMOVE
         //computadorDAO.deleteById(10);
